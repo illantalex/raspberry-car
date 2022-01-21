@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Raspberry Pi remote control</title>
+  <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js">
+  </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+  <script type="text/javascript" src="javascripts/janus.js"></script>
+  <script type="text/javascript" src="javascripts/streamingtest.js"></script>
+  <script type="text/javascript" src="javascripts/paho-mqtt.js"></script>
+  <script type="text/javascript" src="javascripts/mqtt-handler.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css"
+    type="text/css" />
+  <link rel="stylesheet" href="stylesheets/demo.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" />
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="page-header">
+          <h1>Raspberry Pi car control
+            <button class="btn btn-default" autocomplete="off" id="start">Start video</button>
+          </h1>
+        </div>
+        <div class="col-md-5 hide" id="streams0">
+          <div class="row">
+            <!-- <div class="row"> -->
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Streams <i id="update-streams0" class="fa fa-refresh"
+                    title="Update list of streams" style="cursor: pointer;"></i></h3>
+              </div>
+              <div class="panel-body" id="list0">
+                <div class="btn-group btn-group-sm">
+                  <button class="btn btn-primary" autocomplete="off" id="watch0">Watch or
+                    Listen</button>
+                  <div class="btn-group btn-group-sm">
+                    <button autocomplete="off" id="streamset0" class="btn btn-default dropdown-toggle"
+                      data-toggle="dropdown">
+                      Streams list<span class="caret"></span>
+                    </button>
+                    <ul id="streamslist0" class="dropdown-menu" role="menu">
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row hide" id="info0">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-info-circle"></i> Metadata</h3>
+              </div>
+              <div class="panel-body">
+                <pre id="metadata0" style="word-break: break-word;"></pre>
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+          <div class="row">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Stream
+                  <span class="label label-info hide" id="status0"></span>
+                  <span class="label label-primary hide" id="curres0"></span>
+                  <span class="label label-info hide" id="curbitrate0"></span>
+                </h3>
+              </div>
+              <div class="panel-body" id="stream0"></div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-md-2 hide"></div> -->
+        <div class="col-md-5 hide" id="streams1">
+          <div class="row">
+            <!-- <div class="row"> -->
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Streams <i id="update-streams1" class="fa fa-refresh"
+                    title="Update list of streams" style="cursor: pointer;"></i></h3>
+              </div>
+              <div class="panel-body" id="list1">
+                <div class="btn-group btn-group-sm">
+                  <button class="btn btn-primary" autocomplete="off" id="watch1">Watch or
+                    Listen</button>
+                  <div class="btn-group btn-group-sm">
+                    <button autocomplete="off" id="streamset1" class="btn btn-default dropdown-toggle"
+                      data-toggle="dropdown">
+                      Streams list<span class="caret"></span>
+                    </button>
+                    <ul id="streamslist1" class="dropdown-menu" role="menu">
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+            <div class="row hide" id="info1">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i class="fa fa-info-circle"></i> Metadata</h3>
+                </div>
+                <div class="panel-body">
+                  <pre id="metadata1" style="word-break: break-word;"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Stream
+                  <span class="label label-info hide" id="status1"></span>
+                  <span class="label label-primary hide" id="curres1"></span>
+                  <span class="label label-info hide" id="curbitrate1"></span>
+                </h3>
+              </div>
+              <div class="panel-body" id="stream1"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="row">
+            <form name="sender" onsubmit="return false">
+              <input type="text" name="user">
+              <label for="user">Username to connect</label>
+              <input type="button" onclick="connect()" value="connect">
+            </form>
+          </div>
+          <div class="row">
+            <p id="telemetery"></p>
+          </div>
+          <div class="row text-center">
+            <button onclick="send('1')">↑</button>
+          </div>
+          <div class="row text-center">
+            <button onclick="send('3')">↖</button>
+            <button onclick="send('4')">↗</button>
+          </div>
+          <div class="row text-center">
+            <button onclick="send('5')">↙</button>
+            <button onclick="send('6')">↘</button>
+          </div>
+          <div class="row text-center">
+            <button onclick="send('2')">↓</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="footer">
+    </div>
+  </div>
+
+</body>
+
+</html>

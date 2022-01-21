@@ -1,0 +1,29 @@
+{
+  "name": "rpi-mqtt-control",
+  "version": "1.0.0",
+  "description": "Node app to send commands to and get telemetery from Raspberry Pi (or other single-board computers) via the MQTT protocol",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "MQTT",
+    "Raspberry",
+    "RPi",
+    "Arduino",
+    "Serial",
+    "Telemetery",
+    "IOT"
+  ],
+  "author": "Illya Antonyuk",
+  "license": "MIT",
+  "dependencies": {
+    "check-internet-connected": "^2.0.5",
+    "mqtt": "^4.2.6",
+    "pi-temperature": "^2.1.0",
+    "raspi": "^6.0.1",
+    "raspi-serial": "^6.0.0",
+    "wait-for-event": "^2.0.1",
+    "ws": "^7.4.2"
+  }
+}

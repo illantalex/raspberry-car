@@ -1,0 +1,5 @@
+ffmpeg -f video4linux2 -input_format h264 -video_size 1280x720 -framerate 30 -i /dev/video3 -c:v copy -tune zerolatency -f rtp rtp://192.168.1.102:5504
+ffmpeg -f video4linux2 -input_format yuyv422 -video_size 640x480 -framerate 10 -i /dev/video0 -c:v h264_omx -tune zerolatency -f rtsp rtsp://192.168.1.102:5514
+ffplay -fflags nobuffer -flags low_delay -framedrop -strict experimental -i rtsp://127.0.0.1:6554/stream1 -vf "transpose=2, transpose=2"
+ffplay -fflags nobuffer -flags low_delay -framedrop -strict experimental rtsp://localhost:6554/stream2
+

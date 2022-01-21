@@ -1,0 +1,48 @@
+version: "3"
+services:
+  server:
+    build: ./server
+    container_name: ai-remote-ctl-server
+    command: npm run start
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - MONGO_URL=mongodb://api_db:27017/api
+      - AUTH_API_URL=http://auth:3002/api
+    # networks:
+    #   - ai-remote-ctl-network
+    depends_on:
+      - mosquitto
+      - janus-gateway
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: ai-remote-ctl-mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    # command: mosquitto -c /etc/mosquitto/mosquitto.conf
+    # networks:
+    #   - ai-remote-ctl-network
+  janus-gateway:
+    image: canyan/janus-gateway:0.10.7
+    command: ["/usr/local/bin/janus", "-F", "/usr/local/etc/janus"]
+    ports:
+      - "8188:8188"
+      - "8088:8088"
+      - "8089:8089"
+      - "8889:8889"
+      - "8000:8000"
+      - "7088:7088"
+      - "7089:7089"
+      - "6504:6504"
+      - "6514:6514"
+    volumes:
+      - "./janus-gateway/janus.plugin.streaming.jcfg:/usr/local/etc/janus/janus.plugin.streaming.jcfg"
+    restart: always
+# networks:
+#   ai-remote-ctl-network:
+#     driver: bridge
